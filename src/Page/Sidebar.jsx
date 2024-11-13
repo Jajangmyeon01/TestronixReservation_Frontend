@@ -58,7 +58,7 @@ function Sidebar(props) {
         email: '',
         date: '',
         time: '',
-        venue: rooms.length > 0 ? rooms[0].venue : 'Room 1', // Set first room's venue as default
+        venue: '',
         notes: '',
     });
     const [status, setStatus] = useState('R');
@@ -467,7 +467,7 @@ function Sidebar(props) {
                                 </MenuItem>
                             ) : (
                                 rooms.map((room, index) => (
-                                    <MenuItem key={index} value={room.venue}>
+                                    <MenuItem key={index} value={room.id}>
                                         {room.venue}
                                     </MenuItem>
                                 ))

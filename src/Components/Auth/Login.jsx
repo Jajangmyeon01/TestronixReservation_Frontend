@@ -25,7 +25,7 @@ function Login() {
 
             Swal.fire('Login Successful', 'You are now logged in!', 'success').then(() => {
                 // Redirect to home page
-                window.location.href = '/dashboard';
+                window.location.href = '/';
             });
 
 
