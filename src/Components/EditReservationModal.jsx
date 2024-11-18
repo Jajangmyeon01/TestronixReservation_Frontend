@@ -23,16 +23,16 @@ function EditReservationModal({ open, onClose, reservationData, onRefresh }) {
         email: '',
         date: '',
         time: '',
-        venue: rooms.length > 0 ? rooms[0].rooms : '',
+        venue: '',
         notes: '',
     });
     const [status, setStatus] = useState('R');
 
     useEffect(() => {
-        // console.log("Reservation data received:", reservationData); // Debugging line
+    //    console.log("Reservation data received:", reservationData); // Debugging line
         if (reservationData && reservationData.customer) {
             setFormData({
-                first_name: reservationData.customer.first_name || '',
+                first_name: reservationData.customer.first_name || '', 
                 last_name: reservationData.customer.last_name || '',
                 email: reservationData.customer.email || '',
                 date: reservationData.customer.date || '',
@@ -59,7 +59,7 @@ function EditReservationModal({ open, onClose, reservationData, onRefresh }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const updatedData = { ...formData, status };
-        // console.log("Sending updated data:", updatedData); // Debugging
+      console.log("Sending updated data:", updatedData); // Debugging
         try {
             const response = await axios.put(
                 `http://127.0.0.1:8000/api/dashboard/${reservationData.id}`,
@@ -125,49 +125,53 @@ function EditReservationModal({ open, onClose, reservationData, onRefresh }) {
                         value={formData.date}
                         onChange={handleChange}
                     />
+                          <TextField
+                            select
+                            margin="dense"
+                            name="time"
+                            label="Select Hour"
+                            fullWidth
+                            variant="standard"
+                            value={formData.time}
+                            onChange={handleChange}
+                        >
+                            {/* Loop to create hour options from 9 AM to 4 PM */}
+                            {[...Array(8)].map((_, index) => {
+                                const hour = 9 + index; // 9 AM to 4 PM
+                                const period = hour < 12 ? 'AM' : 'PM';
+                                const displayHour = hour > 12 ? hour - 12 : hour; // Convert 13 to 1, 14 to 2, etc.
+                                const label = `${displayHour} ${period}`;
+                                const value = `${hour > 12 ? hour - 12 : hour}:00 ${period}`; // Set the value in 12-hour format
+
+                                return (
+                                    <MenuItem key={hour} value={value}>
+                                        {label}
+                                    </MenuItem>
+                                );
+                            })}
+                        </TextField>
                     <TextField
-                        select
-                        margin="dense"
-                        name="time"
-                        label="Select Hour"
-                        fullWidth
-                        variant="standard"
-                        value={formData.time}
-                        onChange={handleChange}
-                    >
-                        {[...Array(8)].map((_, index) => {
-                            const hour = 9 + index;
-                            const isNoon = hour === 12;
-                            const label = isNoon ? "12 PM" : (hour < 12 ? `${hour} AM` : `${hour - 12} PM`);
-                            return (
-                                <MenuItem key={hour} value={`${hour}:00`}>
-                                    {label}
+                            select
+                            margin="dense"
+                            name="venue"
+                            label="Venue"
+                            fullWidth
+                            variant="standard"
+                            value={formData.venue}
+                            onChange={handleChange}
+                        >
+                            {rooms.length === 0 ? (
+                                <MenuItem disabled value="">
+                                    Please create a room
                                 </MenuItem>
-                            );
-                        })}
-                    </TextField>
-                    <TextField
-                        select
-                        margin="dense"
-                        name="venue"
-                        label="Venue"
-                        fullWidth
-                        variant="standard"
-                        value={formData.venue}
-                        onChange={handleChange}
-                    >
-                        {rooms.length === 0 ? (
-                            <MenuItem disabled value="">
-                                Please create a room
-                            </MenuItem>
-                        ) : (
-                            rooms.map((room, index) => (
-                                <MenuItem key={index} value={room.rooms}>
-                                    {room.rooms}
-                                </MenuItem>
-                            ))
-                        )}
-                    </TextField>
+                            ) : (
+                                rooms.map((room) => (
+                                    <MenuItem key={room.id} value={room.venue}>
+                                        {room.venue}
+                                    </MenuItem>
+                                ))
+                            )}
+                        </TextField>
                     <TextField
                         margin="dense"
                         name="notes"

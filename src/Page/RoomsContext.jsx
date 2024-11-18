@@ -19,7 +19,7 @@ export const RoomsProvider = ({ children }) => {
     const fetchRooms = async () => {
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/room');
-            console.log("API Response:", response.data); // Debugging
+            // console.log("API Response:", response.data); // Debugging
     
             // Ensure the response has the expected structure
             if (response.data && response.data.data) {
@@ -40,7 +40,7 @@ export const RoomsProvider = ({ children }) => {
                 );
     
                 setRooms(uniqueRooms);
-                console.log("Fetched unique rooms:", uniqueRooms); // Debugging
+                // console.log("Fetched unique rooms:", uniqueRooms); // Debugging
             } else {
                 throw new Error('Unexpected API response structure');
             }
@@ -66,7 +66,7 @@ export const RoomsProvider = ({ children }) => {
                 { headers: { 'Content-Type': 'application/json' } }
             );
 
-            console.log("Add Room API Response:", response.data); // Debugging
+            // console.log("Add Room API Response:", response.data); // Debugging
 
             if (response.data?.data) {
                 const addedRoom = {
@@ -104,54 +104,54 @@ export const RoomsProvider = ({ children }) => {
     };
 
     // Function to update a room
-    const updateRoom = async (roomId, updatedRoom) => {
-        const formattedRoomData = {
-            'room-venue': updatedRoom.venue,
-            'room-location': updatedRoom.location,
-            'room-capacity': updatedRoom.capacity,
-            'room-image': updatedRoom.image,
-            'room-features': updatedRoom.features,
-        };
-    
-        try {
-            const response = await axios.put(
-                `http://127.0.0.1:8000/api/updateRoom/${roomId}`,
-                formattedRoomData,
-                { headers: { 'Content-Type': 'application/json' } }
-            );
-    
-            console.log("Response data after update:", response.data); // Updated API log
-    
-            let updatedRoomData;
-    
-            // Check if the response contains valid data
-            if (response.data && response.data.data && response.data.data.length > 0) {
-                const roomData = response.data.data[0]; // Assuming `data` is an array with room details
-                updatedRoomData = {
-                    id: roomId,
-                    venue: roomData['room-venue'],
-                    location: roomData['room-location'],
-                    capacity: roomData['room-capacity'],
-                    image: roomData['room-image'],
-                    features: roomData['room-features'],
-                };
-            } else {
-                // Fallback if data is missing or structure is unexpected
-                console.warn("Response contained no valid room data, using provided updatedRoom:");
-                updatedRoomData = { id: roomId, ...updatedRoom };
+        const updateRoom = async (roomId, updatedRoom) => {
+            const formattedRoomData = {
+                'room-venue': updatedRoom.venue,
+                'room-location': updatedRoom.location,
+                'room-capacity': updatedRoom.capacity,
+                'room-image': updatedRoom.image,
+                'room-features': updatedRoom.features,
+            };
+        
+            try {
+                const response = await axios.put(
+                    `http://127.0.0.1:8000/api/updateRoom/${roomId}`,
+                    formattedRoomData,
+                    { headers: { 'Content-Type': 'application/json' } }
+                );
+        
+                console.log("Response data after update:", response.data); // Updated API log
+        
+                let updatedRoomData;
+        
+                // Check if the response contains valid data
+                if (response.data && response.data.data && response.data.data.length > 0) {
+                    const roomData = response.data.data[0]; // Assuming `data` is an array with room details
+                    updatedRoomData = {
+                        id: roomId,
+                        venue: roomData['room-venue'],
+                        location: roomData['room-location'],
+                        capacity: roomData['room-capacity'],
+                        image: roomData['room-image'],
+                        features: roomData['room-features'],
+                    };
+                } else {
+                    // Fallback if data is missing or structure is unexpected
+                    console.warn("Response contained no valid room data, using provided updatedRoom:");
+                    updatedRoomData = { id: roomId, ...updatedRoom };
+                }
+        
+                setRooms((prevRooms) =>
+                    prevRooms.map((room) => (room.id === roomId ? updatedRoomData : room))
+                );
+        
+                Swal.fire('Updated!', 'The room has been updated.', 'success');
+            } catch (error) {
+                console.error("Error updating room:", error);
+                Swal.fire('Error', 'Failed to update the room. Please try again.', 'error');
             }
-    
-            setRooms((prevRooms) =>
-                prevRooms.map((room) => (room.id === roomId ? updatedRoomData : room))
-            );
-    
-            Swal.fire('Updated!', 'The room has been updated.', 'success');
-        } catch (error) {
-            console.error("Error updating room:", error);
-            Swal.fire('Error', 'Failed to update the room. Please try again.', 'error');
-        }
-    };
-    
+        };
+        
 
     
 

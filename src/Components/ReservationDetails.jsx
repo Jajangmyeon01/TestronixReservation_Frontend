@@ -22,7 +22,7 @@ const ReservationDetails = ({ reservation, onClose }) => {
                 <strong>Email:</strong> {reservation.customer.email}
             </Typography>
             <Typography variant="body1">
-                <strong>Rental Time:</strong> {reservation.customer.rental_time}
+                <strong>Rental Time:</strong> {reservation.customer.date} {reservation.customer.time}
             </Typography>
             <Typography variant="body1">
                 <strong>Venue:</strong> {reservation.customer.venue}
@@ -36,9 +36,9 @@ const ReservationDetails = ({ reservation, onClose }) => {
             <Typography variant="body1">
                 <strong>Updated At:</strong> {reservation.customer.updated_at}
             </Typography>
-            {/* <Button variant="contained" color="primary" onClick={handlePrint} sx={{ mt: 2 }}>
+            <Button variant="contained" color="primary" onClick={handlePrint} sx={{ mt: 2 }}>
                 Print Details
-            </Button> */}
+            </Button>
             <Button variant="outlined" color="secondary" onClick={onClose} sx={{ mt: 2, ml: 1 }}>
                 Close
             </Button>

@@ -302,7 +302,7 @@ function Sidebar(props) {
                             <AccountCircleIcon />
                         </IconButton>
                         <Menu
-                            anchorEl={anchorEl}
+                            anchorEl={anchorEl} 
                             open={open}
                             onClose={handleMenuClose}
                             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -429,7 +429,7 @@ function Sidebar(props) {
                                 min: getCurrentDateTime().split('T')[0], // Set the minimum date only
                             }}
                         />
-                        <TextField
+                   <TextField
                             select
                             margin="dense"
                             name="time"
@@ -442,15 +442,19 @@ function Sidebar(props) {
                             {/* Loop to create hour options from 9 AM to 4 PM */}
                             {[...Array(8)].map((_, index) => {
                                 const hour = 9 + index; // 9 AM to 4 PM
-                                const isNoon = hour === 12;
-                                const label = isNoon ? "12 PM" : (hour < 12 ? `${hour} AM` : `${hour - 12} PM`);
+                                const period = hour < 12 ? 'AM' : 'PM';
+                                const displayHour = hour > 12 ? hour - 12 : hour; // Convert 13 to 1, 14 to 2, etc.
+                                const label = `${displayHour} ${period}`;
+                                const value = `${hour > 12 ? hour - 12 : hour}:00 ${period}`; // Set the value in 12-hour format
+
                                 return (
-                                    <MenuItem key={hour} value={`${hour}:00`}>
+                                    <MenuItem key={hour} value={value}>
                                         {label}
                                     </MenuItem>
                                 );
                             })}
                         </TextField>
+
                         <TextField
                             select
                             margin="dense"
@@ -466,13 +470,14 @@ function Sidebar(props) {
                                     Please create a room
                                 </MenuItem>
                             ) : (
-                                rooms.map((room, index) => (
-                                    <MenuItem key={index} value={room.id}>
+                                rooms.map((room) => (
+                                    <MenuItem key={room.id} value={room.venue}>
                                         {room.venue}
                                     </MenuItem>
                                 ))
                             )}
                         </TextField>
+
 
                         <TextField
                             margin="dense"
@@ -497,7 +502,7 @@ function Sidebar(props) {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => setOpenReservationModal(false)}>Cancel</Button>
-                        <Button type="submit" variant="contained" color="primary">Add Reservation</Button>
+                        <Button type="submit" variant="contained" color="primary" >Add Reservation</Button>
                     </DialogActions>
                 </form>
             </Dialog>
