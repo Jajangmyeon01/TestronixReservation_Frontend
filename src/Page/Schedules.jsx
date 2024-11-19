@@ -18,34 +18,49 @@
     const calendarRef = useRef(null);
 
     // Fetch reservations, adapting to the Reservations structure
-    const getReservations = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/dashboard');
-        console.log(response.data);
-        const { data } = response.data;
+   const getReservations = async () => {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/api/dashboard');
+    console.log(response.data); // Debugging to verify the data structure
+    const { data } = response.data;
+
+    const mappedEvents = data.map((reservation) => {
+      const reservationTime = reservation.customer.time; // Assuming this is 12-hour format, e.g., "1:00 PM"
+      const [time, period] = reservationTime.split(' '); // Separate time and AM/PM
+      let [hours, minutes] = time.split(':');
+      hours = parseInt(hours, 10);
     
-        const mappedEvents = data.map((reservation) => ({
-          title: `${reservation.customer.first_name} ${reservation.customer.last_name}`,
-          start: `${reservation.customer.date}T${reservation.customer.time}`,// Adjusted to access the nested customer date and time
-          extendedProps: {
-            venue: reservation.venue,
-            reservation_id: reservation.id,
-            status: reservation.status,
-            customer: reservation.customer,
-          },
-          backgroundColor:
-            reservation.status === 'S' ? '#198754' :
-            reservation.status === 'R' ? '#0d6efd' :
-            'rgba(108, 117, 125, 0.8)',
-          opacity: new Date(`${reservation.customer.date}T${reservation.customer.time}`) < new Date() ? '0.5' : '1',
-        }));
+      // Convert to 24-hour time
+      if (period === 'PM' && hours < 12) hours += 12;
+      if (period === 'AM' && hours === 12) hours = 0;
+      const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes}`;
     
-        setEvents(mappedEvents);
-      } catch (error) {
-        console.error('Error fetching reservations:', error);
-      }
-    };
+      return {
+        title: `${reservation.customer.first_name} ${reservation.customer.last_name}`,
+        start: `${reservation.customer.date}T${formattedTime}`, // ISO 8601 format
+        extendedProps: {
+          venue: reservation.venue,
+          reservation_id: reservation.id,
+          status: reservation.status,
+          customer: reservation.customer,
+          originalDate: reservation.customer.date, // Add original date
+          originalTime: reservation.customer.time, // Add original time (12-hour format)
+        },
+        backgroundColor:
+          reservation.status === 'S' ? '#198754' :
+          reservation.status === 'R' ? '#0d6efd' :
+          'rgba(108, 117, 125, 0.8)',
+        opacity: new Date(`${reservation.customer.date}T${formattedTime}`) < new Date() ? '0.5' : '1',
+      };
+    });
     
+
+    setEvents(mappedEvents);
+  } catch (error) {
+    console.error('Error fetching reservations:', error);
+  }
+};
+
 
     useEffect(() => {
       getReservations();

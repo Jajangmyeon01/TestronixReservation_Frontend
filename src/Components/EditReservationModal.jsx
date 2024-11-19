@@ -61,10 +61,14 @@ function EditReservationModal({ open, onClose, reservationData, onRefresh }) {
         const updatedData = { ...formData, status };
       console.log("Sending updated data:", updatedData); // Debugging
         try {
+
             const response = await axios.put(
                 `http://127.0.0.1:8000/api/dashboard/${reservationData.id}`,
                 updatedData
             );
+
+            console.log(`Response: `, response)
+
             // console.log("Response from API:", response.data); 
             Swal.fire('Reservation Updated!', 'Your reservation has been successfully updated.', 'success');
             onClose();

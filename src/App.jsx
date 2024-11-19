@@ -5,6 +5,7 @@ import Reservations from './Page/Reservations';
 import Schedules from './Page/Schedules';
 import Rooms from './Page/Rooms';
 import Sidebar from './Page/Sidebar';
+import ReservationDetails from './Page/ReservationDetails'; 
 import { RoomsProvider } from './Page/RoomsContext';
 import Login from './Components/Auth/Login';
 import NotFound from './Components/NotFound';
@@ -25,7 +26,7 @@ function App() {
 
   return (
     <RoomsProvider>
-      {isAuthenticated && <Sidebar />}
+      {isAuthenticated && (!window.location.pathname.startsWith('/reservation-details')) && <Sidebar />}
       <Routes>
         {isAuthenticated ? (
           <>
@@ -34,6 +35,7 @@ function App() {
             <Route path="/reservations" element={<Reservations />} />
             <Route path="/schedules" element={<Schedules />} />
             <Route path="/rooms" element={<Rooms />} />
+            <Route path="/reservation-details/:id" element={<ReservationDetails />} />
           </>
         ) : (
           <Route path="/login" element={<Login />} />
