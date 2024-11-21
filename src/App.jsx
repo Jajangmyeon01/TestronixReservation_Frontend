@@ -1,48 +1,93 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Dashboard from './Page/Dashboard';
 import Reservations from './Page/Reservations';
 import Schedules from './Page/Schedules';
 import Rooms from './Page/Rooms';
 import Sidebar from './Page/Sidebar';
-import ReservationDetails from './Page/ReservationDetails'; 
+import ReservationDetails from './Page/ReservationDetails';
 import { RoomsProvider } from './Page/RoomsContext';
 import Login from './Components/Auth/Login';
 import NotFound from './Components/NotFound';
 
+// Reusable Protected Route Component
+const ProtectedRoute = ({ isAuthenticated, children }) => {
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+  return children;
+};
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('access_token'));
-  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     setIsAuthenticated(!!token);
-
-    // Redirect to login only if accessing a protected route without authentication
-    if (!token && window.location.pathname !== '/login' && !window.location.pathname.startsWith('/404')) {
-      navigate('/404');
-    }
-  }, [isAuthenticated, navigate]);
+  }, [location]);
 
   return (
     <RoomsProvider>
-      {isAuthenticated && (!window.location.pathname.startsWith('/reservation-details')) && <Sidebar />}
-      <Routes>
-        {isAuthenticated ? (
-          <>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/reservations" element={<Reservations />} />
-            <Route path="/schedules" element={<Schedules />} />
-            <Route path="/rooms" element={<Rooms />} />
-            <Route path="/reservation-details/:id" element={<ReservationDetails />} />
-          </>
-        ) : (
-          <Route path="/login" element={<Login />} />
-        )}
+      {/* Sidebar is only visible when authenticated */}
+      {isAuthenticated && !location.pathname.startsWith('/reservation-details') && <Sidebar />}
 
-        {/* Ensure 404 Not Found Route is always reachable */}
-        <Route path="/404" element={<NotFound />} />
+      <Routes>
+        {/* Protected Routes */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reservations"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Reservations />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/schedules"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Schedules />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/rooms"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Rooms />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reservation-details/:id"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <ReservationDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Public Route */}
+        <Route path="/login" element={<Login />} />
+
+        {/* Catch-All Route for 404 */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </RoomsProvider>
   );

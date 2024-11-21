@@ -20,7 +20,7 @@
     // Fetch reservations, adapting to the Reservations structure
    const getReservations = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/dashboard');
+    const response = await axios.get('https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/dashboard');
     console.log(response.data); // Debugging to verify the data structure
     const { data } = response.data;
 

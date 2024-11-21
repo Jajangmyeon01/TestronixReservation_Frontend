@@ -27,7 +27,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchReservations = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/dashboard');
+                const response = await axios.get('https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/dashboard');
                 const sortedReservations = response.data.data.sort(
                     (a, b) => new Date(b.customer.created_at) - new Date(a.customer.created_at)
                 );

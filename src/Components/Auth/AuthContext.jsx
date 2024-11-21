@@ -14,7 +14,7 @@
 
         const login = async (email, password) => {
             try {
-                const response = await axios.post('http://127.0.0.1:8000/api/auth/login', { email, password });
+                const response = await axios.post('https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/auth/login', { email, password });
                 localStorage.setItem('token', response.data.access_token);
                 setIsAuthenticated(true);
                 navigate('/'); // Redirect to dashboard or main page
@@ -25,7 +25,7 @@
 
         const logout = async () => {
             try {
-                await axios.post('http://127.0.0.1:8000/api/auth/logout', {}, {
+                await axios.post('https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/auth/logout', {}, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
                 });
                 localStorage.removeItem('token');

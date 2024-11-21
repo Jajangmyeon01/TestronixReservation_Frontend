@@ -13,7 +13,7 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/auth/login', {
+            const response = await axios.post('https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/auth/login', {
                 email,
                 password,
             });

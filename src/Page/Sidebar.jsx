@@ -99,7 +99,7 @@ function Sidebar(props) {
         }
 
         try {
-            await axios.post('http://127.0.0.1:8000/api/logout', {}, {
+            await axios.post('https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/logout', {}, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -149,7 +149,7 @@ function Sidebar(props) {
                 return;
             }
             try {
-                const response = await axios.post('http://127.0.0.1:8000/api/dashboard', reservationData);
+                const response = await axios.post('https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/dashboard', reservationData);
                 console.log('Reservation added:', response.data);
                 Swal.fire('Reservation Added!', 'Your reservation has been successfully added.', 'success');
                 setOpenReservationModal(false);
@@ -209,7 +209,7 @@ function Sidebar(props) {
                 onClick={() => navigate('/')}
             >
                 <img
-                    src="/src/assets/Screenshot_2024-10-22_224953-removebg-preview.png"
+                    src="/assets/Screenshot_2024-10-22_224953-removebg-preview.png"
                     alt="TronixBook Logo"
                     style={{ maxWidth: '100%', height: 'auto', width: '250px' }}
                 />

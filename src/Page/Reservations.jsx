@@ -45,7 +45,7 @@
             const getReservations = async () => {
                 setLoading(true);
                 try {
-                    const response = await axios.get('http://127.0.0.1:8000/api/dashboard');
+                    const response = await axios.get('https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/dashboard');
                     const { data } = response.data;
                     const sortedData = data.sort((a, b) => new Date(b.customer.created_at) - new Date(a.customer.created_at));
                     setReservations(sortedData);
@@ -69,7 +69,7 @@
                     });
 
                     if (result.isConfirmed) {
-                        await axios.delete(`http://127.0.0.1:8000/api/dashboard/${id}`);
+                        await axios.delete(`https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/dashboard/${id}`);
                         Swal.fire({
                             title: 'Reservation Deleted!',
                             text: 'Your reservation has been successfully deleted.',

@@ -18,7 +18,7 @@ export const RoomsProvider = ({ children }) => {
     // Function to fetch rooms from the backend
     const fetchRooms = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/room');
+            const response = await axios.get('https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/room');
             // console.log("API Response:", response.data); // Debugging
     
             // Ensure the response has the expected structure
@@ -61,7 +61,7 @@ export const RoomsProvider = ({ children }) => {
 
         try {
             const response = await axios.post(
-                'http://127.0.0.1:8000/api/addRoom',
+                'https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/addRoom',
                 formattedRoomData,
                 { headers: { 'Content-Type': 'application/json' } }
             );
@@ -94,7 +94,7 @@ export const RoomsProvider = ({ children }) => {
     // Function to delete a room
     const deleteRoom = async (roomId) => {
         try {
-            await axios.delete(`http://127.0.0.1:8000/api/deleteRoom/${roomId}`);
+            await axios.delete(`https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/deleteRoom/${roomId}`);
             setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
             Swal.fire('Deleted!', 'The room has been deleted.', 'success');
         } catch (error) {
@@ -115,7 +115,7 @@ export const RoomsProvider = ({ children }) => {
         
             try {
                 const response = await axios.put(
-                    `http://127.0.0.1:8000/api/updateRoom/${roomId}`,
+                    `https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/updateRoom/${roomId}`,
                     formattedRoomData,
                     { headers: { 'Content-Type': 'application/json' } }
                 );

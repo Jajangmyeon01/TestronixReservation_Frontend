@@ -63,7 +63,7 @@ function EditReservationModal({ open, onClose, reservationData, onRefresh }) {
         try {
 
             const response = await axios.put(
-                `http://127.0.0.1:8000/api/dashboard/${reservationData.id}`,
+                `https://api-tronix-reserve.supsofttech.tmc-innovations.com/api/dashboard/${reservationData.id}`,
                 updatedData
             );
 
