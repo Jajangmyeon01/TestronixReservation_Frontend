@@ -63,8 +63,6 @@ Styling: Bootstrap, Emotion
 📜 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-vbnet
-You can copy and paste this into your `README.md` file. Let me know if you’d like additional customizatio
 
 
 
