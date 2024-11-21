@@ -33,5 +33,5 @@ Follow these steps to get started:
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/yourusername/my-react-app.git
+git clone https://github.com/yourusername/my-react-app.git](https://github.com/Jajangmyeon01/TestronixReservation_Frontend.git
 cd my-react-app
