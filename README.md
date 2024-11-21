@@ -2,7 +2,7 @@
 
 <p align="center">
   <b>Experience the seamless, design of our Web and Tablet UI!</b><br>
-  Built with the power of <i>React</i>, <i>Vite</i>, <i>Flutter</i> and <i>Laravel</i>.
+  Built with the power of <i>React+Vite</i>, <i>Flutter</i> and <i>Laravel</i>.
 </p>
 
 <div align="center">
