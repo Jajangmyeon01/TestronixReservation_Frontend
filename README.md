@@ -13,3 +13,25 @@
 </div>
 
 ---
+
+## 🚀 Features
+
+- **Modern UI/UX**: Optimized for Web and Tablet.
+- **Fast Development**: Powered by Vite for lightning-fast build times.
+- **Full Integration**: Backend support with Laravel, and a mobile-friendly experience with Flutter.
+- **Reusable Components**: Built with MUI, SweetAlert2, and FullCalendar.
+
+---
+## 📦 Installation and Setup
+
+Follow these steps to get started:
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/yourusername/my-react-app.git
+cd my-react-app
