@@ -21,6 +21,15 @@
 - **Full Integration**: Backend support with Laravel, and a mobile-friendly experience with Flutter.
 - **Reusable Components**: Built with MUI, SweetAlert2, and FullCalendar.
 
+## Backend and Mobile Source codes:
+
+- [Testronix Reserve Mobile](https://github.com/iAmSoxx/TestronixReserve_Mobile)  
+  A mobile application for managing reservations effectively.
+  
+- [Testronix Reserve Backend](https://github.com/wildecodx/TestronixReserve_Backend)  
+  The backend system powering Testronix Reserve.
+
+
 ---
 ## 📦 Installation and Setup
 
